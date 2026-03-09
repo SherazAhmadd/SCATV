@@ -4,7 +4,7 @@
 void circularviral_aligner::align_sequences(string fastq_file, string output_file) {
     
     ifstream input_file(fastq_file); 
-    ofstream out(output_file); // Final output file stream
+    ofstream out(output_file); 
 
     if (!input_file.is_open()) {
         cout << "Error: The fastq reads failed to open " << fastq_file << endl;
@@ -20,7 +20,7 @@ void circularviral_aligner::align_sequences(string fastq_file, string output_fil
     string read_header = "";
     string read_seq = "";
 
-    // Write Official SCATV SAM Header to the file
+
     out << "@HD\tVN:1.6\tSO:unsorted" << endl;
     out << "@SQ\tSN:VIRAL_CIRCULAR\tLN:" << original_length << endl;
     out << "@PG\tID:SCATV\tPN:Spaced-seed_Circular_Aligner_Targeted_Virus\tVN:1.0" << endl;
@@ -37,7 +37,7 @@ void circularviral_aligner::align_sequences(string fastq_file, string output_fil
             int mask_len = space_mask.length();
             unordered_map<int, int> position_votes; 
             
-            // --- Spaced Seed Indexing ---
+            // Spaced Seed Indexing algo
             for (int i = 0; i <= (int)read_seq.length() - mask_len; i++) {
                 string current_window = read_seq.substr(i, mask_len);
                 string masked_kmer = "";
@@ -124,4 +124,5 @@ void circularviral_aligner::align_sequences(string fastq_file, string output_fil
     input_file.close();
     out.close();
     cout << "[SCATV] Alignment finished. Results saved to " << output_file << endl;
+
 }
